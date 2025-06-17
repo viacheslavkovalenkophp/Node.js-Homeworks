@@ -9,7 +9,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const getSum = async (fileName) => {
+module.exports = async (fileName) => {
     try {
         const filePath = path.resolve(fileName);
         
@@ -27,6 +27,5 @@ const getSum = async (fileName) => {
     }
 };
 
-getSum('num.dat').then(console.log).catch(console.error);
 
 

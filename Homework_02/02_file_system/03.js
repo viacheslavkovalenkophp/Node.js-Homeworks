@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const getFileSize = (fileName) => {
+module.exports = (fileName) => {
     try {
         const file = fs.statSync(fileName);
         if(file.isFile()) {
@@ -20,4 +20,4 @@ const getFileSize = (fileName) => {
         return 'файл не існєє';
     }};
 
-    console.log(getFileSize('./test_folder/one.txt'));
+  

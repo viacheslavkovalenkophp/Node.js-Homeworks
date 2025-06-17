@@ -8,15 +8,11 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const writeFile = async (lines) => {
+module.exports = async (lines) => {
     try {
         const filePath = path.resolve('file_04.txt');
 
-        // Форматуємо масив у текст, додаючи `\r\n` між рядками
-        const content = lines.join('\r\n');
-
-        // Записуємо текст у файл із прапором `w`, щоб перезаписати його, якщо він уже існує
-        await fs.writeFile(filePath, content, { encoding: 'utf-8', flag: 'w' });
+        await fs.writeFile(filePath, content, { encoding: 'utf8', flag: 'w' });
 
         return 'Файл успішно створено!';
     } catch (error) {
@@ -24,6 +20,3 @@ const writeFile = async (lines) => {
     }
 };
 
-writeFile(['Перша стрічка', 'Друга стрічка', 'Третя стрічка'])
-    .then(console.log)
-    .catch(console.error);  

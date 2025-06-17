@@ -7,7 +7,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const createFile = async (text) => {
+module.exports = async (text) => {
     try {
         const filePath = path.resolve('file_03.txt');
 
@@ -19,5 +19,3 @@ const createFile = async (text) => {
     }
 };
 
-
-createFile('Привіт, світ!').then(console.log).catch(console.error);

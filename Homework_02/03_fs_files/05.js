@@ -7,7 +7,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const copyFiles = async (sourceFile, targetFile) => {
+module.exports = async (sourceFile, targetFile) => {
     try {
         const sourcePath = path.resolve(sourceFile);
         const targetPath = path.resolve(targetFile);
@@ -24,7 +24,3 @@ const copyFiles = async (sourceFile, targetFile) => {
         return 'Помилка: ' + error.message;
     }
 };
-
-copyFiles('source.txt', 'target.txt')
-    .then(console.log)
-    .catch(console.error);

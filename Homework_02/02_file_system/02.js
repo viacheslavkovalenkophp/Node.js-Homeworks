@@ -4,15 +4,16 @@
 const fs = require('fs');
 const path = require('path');
 
-const pathFinder =  (folderPath) =>  {
+module.exports = (folderPath) => {
   try {
-    const stats = fs.statSync(folderPath);
+    const absolutePath = path.resolve(__dirname, folderPath);
+    const stats = fs.statSync(absolutePath);
     return stats.isDirectory();
   } catch (err) {
     return false;
   }
 };
 
-console.log(pathFinder('./test_folder'));
+
 
 

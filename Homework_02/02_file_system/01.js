@@ -7,11 +7,9 @@
 
 const path = require('path');
 
-const getAbsolutePath = function(folderName) {
+module.exports = function(folderName) {
   return path.join(__dirname, folderName);
 };
-
-console.log(getAbsolutePath('./test_folder')); // Виведе абсолютний шлях до теки test_folder
 
 
 

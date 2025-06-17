@@ -11,28 +11,26 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const getFolderContents = async (folderName) => {
+module.exports = async (folderName) => {
     try {
-        const folderPath = path.resolve(folderName);
-        
-        await fs.access(folderPath).catch(() => { throw new Error('Теки не існує'); });
-
+        const folderPath = path.resolve(__dirname, folderName);
         const files = await fs.readdir(folderPath);
-
-        if (files.length === 0) return [];
-
-        return await Promise.all(files.map(async (file) => {
-            const filePath = path.join(folderPath, file);
-            const stats = await fs.stat(filePath);
-            return {
-                name: file,
-                type: stats.isDirectory() ? 'folder' : 'file',
-                format: stats.isDirectory() ? null : path.extname(file) || 'unknown'
-            };
-        }));
+        
+        return Promise.all(
+            files.map(async (file) => {
+                const filePath = path.join(folderPath, file);
+                const stats = await fs.stat(filePath);
+                return {
+                    name: file,
+                    type: stats.isDirectory() ? 'folder' : 'file',
+                    format: stats.isDirectory() ? null : path.extname(file) || 'unknown'
+                };
+            })
+        );
     } catch (error) {
+        console.error('Error:', error.message);
         return false;
     }
 };
 
-getFolderContents('test_folder').then(console.log).catch(console.error);
+
