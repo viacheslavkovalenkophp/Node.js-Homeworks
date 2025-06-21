@@ -6,7 +6,6 @@ const path = require('path');
 
 module.exports = (folderPath) => {
   try {
-    const absolutePath = path.resolve(__dirname, folderPath);
     const stats = fs.statSync(absolutePath);
     return stats.isDirectory();
   } catch (err) {

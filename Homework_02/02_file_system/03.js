@@ -9,15 +9,11 @@ const path = require('path');
 
 module.exports = (fileName) => {
     try {
-        const file = fs.statSync(fileName);
-        if(file.isFile()) {
-            return file.size + ' bytes';
-        }
-        return 'Це не файл, а тека';
+        const stats = fs.statSync(fileName);
+        return stats.isFile() ? stats.size : 0;
+    } catch (err) {
+        return 0;
     }
-
-    catch (err) {
-        return 'файл не існєє';
-    }};
+};
 
   

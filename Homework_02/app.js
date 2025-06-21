@@ -16,9 +16,10 @@ console.log(result);
 
 
 const getFolderContents = require('./02_file_system/04.js');
+
 (async () => {
-    const result = await getFolderContents('test_folder');
-    console.log(result || 'Failed to read folder');
+  const result = await getFolderContents('./02_file_system/test_folder');
+  console.log(result || 'Папка не найдена');
 })();
 
 const countFilesInFolder = require('./02_file_system/05.js');

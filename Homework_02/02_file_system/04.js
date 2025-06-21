@@ -12,25 +12,27 @@ const fs = require('fs').promises;
 const path = require('path');
 
 module.exports = async (folderName) => {
-    try {
-        const folderPath = path.resolve(__dirname, folderName);
-        const files = await fs.readdir(folderPath);
-        
-        return Promise.all(
-            files.map(async (file) => {
-                const filePath = path.join(folderPath, file);
-                const stats = await fs.stat(filePath);
-                return {
-                    name: file,
-                    type: stats.isDirectory() ? 'folder' : 'file',
-                    format: stats.isDirectory() ? null : path.extname(file) || 'unknown'
-                };
-            })
-        );
-    } catch (error) {
-        console.error('Error:', error.message);
-        return false;
+  try {
+    const files = await fs.readdir(folderName);
+    
+    const result = [];
+    for (const file of files) {
+      const filePath = path.join(folderName, file);
+      const stats = await fs.stat(filePath);
+      
+      if (stats.isDirectory()) {
+        result.push({ name: file, ext: null });
+      } else {
+        const ext = path.extname(file);
+        result.push({
+          name: file.replace(ext, ''),
+          ext: ext ? ext.slice(1) : null
+        });
+      }
     }
+    
+    return result;
+  } catch {
+    return false;
+  }
 };
-
-

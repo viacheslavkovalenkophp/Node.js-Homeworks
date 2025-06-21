@@ -11,7 +11,8 @@ const path = require('path');
 module.exports = async (lines) => {
     try {
         const filePath = path.resolve('file_04.txt');
-
+        const content = lines.join('\r\n'); // Об'єднуємо масив рядків з переносами
+        
         await fs.writeFile(filePath, content, { encoding: 'utf8', flag: 'w' });
 
         return 'Файл успішно створено!';
