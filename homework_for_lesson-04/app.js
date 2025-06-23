@@ -29,7 +29,6 @@ app.get('/random', (req, res) => {
   res.json({ min: parseInt(min), max: parseInt(max), random: random });
 });
 
-// Task 10
 app.use((req, res) => {
   res.status(404).send('not found');
 });
