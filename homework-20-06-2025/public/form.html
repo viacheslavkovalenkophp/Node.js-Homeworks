@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload ZIP File</title>
+  <style>
+    .error { color: #d32f2f; }
+    .success { color: #2e7d32; }
+  </style>
+</head>
+<body>
+  <form action="/upload-file" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <button type="submit">Upload</button>
+  </form>
+  <div id="message"></div>
+
+  <script>
+    window.onload = function() {
+      const messageDiv = document.getElementById('message');
+      messageDiv.textContent = '';
+    };
+  </script>
+</body>
+</html>
