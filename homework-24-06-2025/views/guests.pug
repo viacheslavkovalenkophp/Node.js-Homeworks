@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title Отзывы гостей
+  body
+    h2 Отзывы гостей
+    ul
+      each guest in guests
+        li
+          strong= guest.username
+          | : 
+          span= guest.message
+          br
+          small= new Date(guest.timestamp).toLocaleString()
+    a(href="/") На главную
