@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 Сообщения
+  form(action="/message" method="POST")
+    input(type="text" name="name" placeholder="Ваше имя")
+    textarea(name="text" placeholder="Текст сообщения")
+    button(type="submit") Отправить
+  ul
+    each message in messages
+      li #{message.name}: #{message.text} (#{new Date(message.time).toLocaleString()})
