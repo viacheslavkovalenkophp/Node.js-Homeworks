@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1 Регистрация
+  
+  if error
+    .error= error
+  if success
+    .success= success
+
+  form(method="POST" action="/register")
+    div
+      label(for="email") Email:
+      input(type="email" name="email" required)
+    div
+      label(for="password") Пароль:
+      input(type="password" name="password" required)
+    div
+      label Роль:
+      div
+        input(type="radio" name="role" value="user" checked)
+        span Пользователь
+      div
+        input(type="radio" name="role" value="admin")
+        span Администратор
+    button(type="submit") Зарегистрироваться
+  
+  p 
+    | Уже есть аккаунт? 
+    a(href="/login") Войти

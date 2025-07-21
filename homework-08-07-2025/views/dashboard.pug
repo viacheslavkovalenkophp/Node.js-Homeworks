@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Панель управления (#{user.role})
+  
+  if tasks.length > 0
+    h2 Ваши задачи:
+    ul
+      each task in tasks
+        li
+          h3= task.title
+          p= task.description
+  else
+    p Нет доступных задач.
+
+  a(href="/logout") Выйти
