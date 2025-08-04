@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  article
+    h1= article.title
+    .content!= article.content
+    
+    if article.tags && article.tags.length
+      .tags.mt-3
+        each tag in article.tags
+          span.badge.bg-primary.me-2= tag
+    
+    .mt-4
+      a.btn.btn-outline-primary(href=`/articles/${article.url}/edit`) Редактировать
+      form.d-inline.ms-2(method="POST" action=`/articles/${article.url}/delete`)
+        button.btn.btn-outline-danger(type="submit") Удалить

@@ -1,0 +1,4 @@
+{
+  "db": "mongodb://localhost:27017/sprint_11",
+  "jwtSecret": "super_secret_key"
+}

@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet' href='/styles.css')
+  body
+    header
+      a(href="/") Главная
+      if user
+        a(href="/articles/new") Новая статья
+        a(href="/auth/logout") Выйти
+      else
+        a(href="/auth/login") Войти
+    
+    block content
+
+    footer © 2025 Ваш проект

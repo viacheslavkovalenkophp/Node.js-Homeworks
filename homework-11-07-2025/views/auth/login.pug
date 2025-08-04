@@ -1,0 +1,25 @@
+extends ../layouts/main
+
+block content
+  h1 Вход
+  if error
+    .alert.alert-danger= error
+  form(method="POST")
+    .mb-3
+      label.form-label Email:
+      input.form-control(
+        type="email"
+        name="email"
+        required
+        value=email || ''
+      )
+    .mb-3
+      label.form-label Пароль:
+      input.form-control(
+        type="password"
+        name="password"
+        required
+      )
+    button.btn.btn-primary(type="submit") Войти
+  p.mt-3 Нет аккаунта? 
+    a(href="/auth/signin") Зарегистрироваться

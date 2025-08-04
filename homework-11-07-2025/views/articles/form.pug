@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  h1= article ? 'Редактировать статью' : 'Новая статья'
+  form(method="POST" action=article ? `/articles/${article.url}/edit` : '/articles/new')
+    .mb-3
+      label.form-label Заголовок:
+      input.form-control(
+        type="text" 
+        name="title" 
+        required
+        value=article ? article.title : ''
+      )
+    
+    .mb-3
+      label.form-label Текст:
+      textarea.form-control(
+        name="content" 
+        rows="5"
+        required
+      )= article ? article.content : ''
+    
+    .mb-3
+      label.form-label Теги (через запятую):
+      input.form-control(
+        type="text"
+        name="tags"
+        value=article && article.tags ? article.tags.join(', ') : ''
+      )
+    
+    button.btn.btn-primary(type="submit")= article ? 'Обновить' : 'Создать'
+    a.btn.btn-secondary.ms-2(href=article ? `/articles/${article.url}` : '/') Отмена
