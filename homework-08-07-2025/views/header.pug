@@ -1,0 +1,9 @@
+header
+  nav
+    a(href="/") Главная
+    if user
+      a(href="/dashboard") Личный кабинет
+      a(href="/logout") Выйти
+    else
+      a(href="/login") Войти
+      a(href="/register") Регистрация
