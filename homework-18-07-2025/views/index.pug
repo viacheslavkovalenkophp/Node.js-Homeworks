@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title= article.title
+  body
+    h1= article.title
+    p= article.content
+
+    // Форма комментария
+    h2 Добавить комментарий
+    form(method="POST" action="/comment")
+      input(type="hidden" name="articleId" value=article._id)
+      textarea(name="text" placeholder="Ваш комментарий..." required)
+      button(type="submit") Отправить
+
+    // Список комментариев
+    h2 Комментарии (#{article.comments.length})
+    each comment in article.comments
+      div.comment
+        p= comment.text
+        small= comment.createdAt.toLocaleString()
