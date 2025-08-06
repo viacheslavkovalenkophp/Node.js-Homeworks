@@ -1,10 +1,10 @@
 <header>
     <nav>
-        <a href="/?lang=ua">Українська</a> | 
-        <a href="/?lang=fr">Français</a>
+        <a href="/?lang=<%= typeof lang !== 'undefined' ? lang : 'ua' %>">Головна</a> |
+        <a href="/page?lang=<%= typeof lang !== 'undefined' ? lang : 'ua' %>">Сторінка</a>
     </nav>
-    <nav>
-        <a href="/"><%= __('menu.home') %></a> |
-        <a href="/page"><%= __('menu.page') %></a>
-    </nav>
+    <div class="lang-switcher">
+        <a href="?lang=ua" class="<%= lang === 'ua' ? 'active' : '' %>">UA</a> |
+        <a href="?lang=fr" class="<%= lang === 'fr' ? 'active' : '' %>">FR</a>
+    </div>
 </header>

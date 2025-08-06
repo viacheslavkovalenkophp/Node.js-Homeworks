@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const i18n = require('i18n');
-const cookieParser = require('cookie-parser'); // Добавляем этот модуль
+const cookieParser = require('cookie-parser');
+const Page = require('./models/Page'); // Добавьте эту строку (важно!)
 
 const app = express();
 
@@ -17,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sprint_15
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// 3. Middleware для кук (ДОЛЖЕН БЫТЬ ПЕРВЫМ!)
+// 3. Middleware
 app.use(cookieParser());
 
 // 4. Настройка i18n
@@ -26,67 +27,58 @@ i18n.configure({
   directory: path.join(__dirname, 'locales'),
   defaultLocale: 'ua',
   cookie: 'lang',
+  queryParameter: 'lang'
 });
-app.use(i18n.init);
+app.use(i18n.init); // Добавьте эту строку
 
-// 5. Middleware для обработки языка
+// 5. Middleware для языка
 app.use((req, res, next) => {
-  if (req.query.lang) {
-    res.cookie('lang', req.query.lang, { maxAge: 900000 });
-    return res.redirect(req.originalUrl.split('?')[0]);
-  }
+  const lang = req.query.lang || req.cookies?.lang || 'ua';
+  req.setLocale(lang);
+  res.cookie('lang', lang, { maxAge: 30 * 24 * 60 * 60 * 1000 });
+  res.locals.lang = lang;
   next();
 });
 
 // 6. Роуты
-const Page = require('./models/Page');
-
 app.get('/', async (req, res) => {
   try {
-    const article = await Page.findOne({ title: "Перша стаття" });
+    const article = await Page.findOne().sort({ _id: 1 });
     if (!article) throw new Error('Article not found');
     
-    const lang = req.cookies?.lang || 'ua'; // Безопасное получение куки
-    
     res.render('index', {
-      title: article.title,
-      content: lang === 'ua' ? article.content_ua : article.content_fr
+      title: article.caption[res.locals.lang],
+      content: article.text[res.locals.lang],
+      image: article.image
     });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).render('error', { message: err.message });
   }
 });
 
 app.get('/page', async (req, res) => {
   try {
-    console.log('--- /page запрос ---');
-    console.log('Cookies:', req.cookies);
-    
-    const article = await Page.findOne({ title: "Друга стаття" });
-    console.log('Найдена статья:', article);
-    
-    const lang = req.cookies?.lang || 'ua';
-    console.log('Выбран язык:', lang);
-    
-    const content = lang === 'ua' ? article.content_ua : article.content_fr;
-    console.log('Контент для отображения:', content);
+    const articles = await Page.find().sort({ _id: 1 });
+    if (!articles || articles.length < 2) throw new Error('Articles not found');
     
     res.render('page', {
-      title: article.title,
-      content: content
+      title: articles[1].caption[res.locals.lang],
+      content: articles[1].text[res.locals.lang],
+      image: articles[1].image
     });
   } catch (err) {
-    console.error('Ошибка в /page:', err);
-    res.status(500).send('Server Error');
+    console.error(err);
+    res.status(500).render('error', { message: err.message });
   }
 });
 
+// 7. Обработка 404
+app.use((req, res) => {
+  res.status(404).render('error', { message: 'Page not found' });
+});
 
-
-
-
-// 7. Запуск сервера
+// 8. Запуск сервера
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
