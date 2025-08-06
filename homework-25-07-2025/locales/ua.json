@@ -1,0 +1,8 @@
+{
+	"menu": {
+		"home": "Головна",
+		"page": "Сторінка"
+	},
+	"menu.home": "menu.home",
+	"menu.page": "menu.page"
+}

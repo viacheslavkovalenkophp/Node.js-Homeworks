@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Перша стаття",
+    "content_ua": "Це контент українською мовою.",
+    "content_fr": "Ceci est un contenu en français."
+  },
+  {
+    "title": "Друга стаття",
+    "content_ua": "Це ще один текст українською.",
+    "content_fr": "Un autre texte en français."
+  }
+]
